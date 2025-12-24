@@ -55,8 +55,8 @@ const CompanyShowContent = () => {
   if (isPending || !record) return null;
 
   return (
-    <div className="mt-2 flex pb-2 gap-8">
-      <div className="flex-1">
+    <div className="mt-2 flex flex-col sm:flex-row pb-2 gap-4 sm:gap-8">
+      <div className="flex-1 order-2 sm:order-1">
         <Card>
           <CardContent>
             <div className="flex mb-3">

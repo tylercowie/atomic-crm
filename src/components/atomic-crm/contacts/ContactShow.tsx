@@ -21,17 +21,17 @@ const ContactShowContent = () => {
   if (isPending || !record) return null;
 
   return (
-    <div className="mt-2 mb-2 flex gap-8">
-      <div className="flex-1">
+    <div className="mt-2 mb-2 flex flex-col sm:flex-row gap-4 sm:gap-8">
+      <div className="flex-1 order-2 sm:order-1">
         <Card>
           <CardContent>
             <div className="flex">
               <Avatar />
-              <div className="ml-2 flex-1">
-                <h5 className="text-xl font-semibold">
+              <div className="ml-2 flex-1 min-w-0">
+                <h5 className="text-xl font-semibold truncate">
                   {record.first_name} {record.last_name}
                 </h5>
-                <div className="inline-flex text-sm text-muted-foreground">
+                <div className="inline-flex flex-wrap text-sm text-muted-foreground">
                   {record.title}
                   {record.title && record.company_id != null && " at "}
                   {record.company_id != null && (
@@ -46,7 +46,7 @@ const ContactShowContent = () => {
                   )}
                 </div>
               </div>
-              <div>
+              <div className="hidden sm:block">
                 <ReferenceField
                   source="company_id"
                   reference="companies"

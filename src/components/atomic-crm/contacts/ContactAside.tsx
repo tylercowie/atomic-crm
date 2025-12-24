@@ -28,7 +28,7 @@ export const ContactAside = ({ link = "edit" }: { link?: "edit" | "show" }) => {
 
   if (!record) return null;
   return (
-    <div className="hidden sm:block w-64 min-w-64 text-sm">
+    <div className="w-full sm:w-64 sm:min-w-64 text-sm order-1 sm:order-2">
       <div className="mb-4 -ml-1">
         {link === "edit" ? (
           <EditButton label="Edit Contact" />
@@ -144,11 +144,11 @@ export const ContactAside = ({ link = "edit" }: { link?: "edit" | "show" }) => {
 
       {link !== "edit" && (
         <>
-          <div className="mt-6 pt-6 border-t hidden sm:flex flex-col gap-2 items-start">
+          <div className="mt-6 pt-6 border-t flex flex-col gap-2 items-start">
             <ExportVCardButton />
             <ContactMergeButton />
           </div>
-          <div className="mt-6 pt-6 border-t hidden sm:flex flex-col gap-2 items-start">
+          <div className="mt-6 pt-6 border-t flex flex-col gap-2 items-start">
             <DeleteButton
               className="h-6 cursor-pointer hover:bg-destructive/10! text-destructive! border-destructive! focus-visible:ring-destructive/20 dark:focus-visible:ring-destructive/40"
               size="sm"
