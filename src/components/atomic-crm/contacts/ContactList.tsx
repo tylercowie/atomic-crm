@@ -1,4 +1,6 @@
 import jsonExport from "jsonexport/dist";
+import { Filter } from "lucide-react";
+import { useState } from "react";
 import {
   downloadCSV,
   useGetIdentity,
@@ -10,7 +12,16 @@ import { CreateButton } from "@/components/admin/create-button";
 import { ExportButton } from "@/components/admin/export-button";
 import { List } from "@/components/admin/list";
 import { SortButton } from "@/components/admin/sort-button";
+import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
+import {
+  Sheet,
+  SheetContent,
+  SheetHeader,
+  SheetTitle,
+  SheetTrigger,
+} from "@/components/ui/sheet";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 import type { Company, Contact, Sale, Tag } from "../types";
 import { ContactEmpty } from "./ContactEmpty";
@@ -40,6 +51,8 @@ export const ContactList = () => {
 const ContactListLayout = () => {
   const { data, isPending, filterValues } = useListContext();
   const { identity } = useGetIdentity();
+  const isMobile = useIsMobile();
+  const [filterOpen, setFilterOpen] = useState(false);
 
   const hasFilters = filterValues && Object.keys(filterValues).length > 0;
 
@@ -48,8 +61,37 @@ const ContactListLayout = () => {
   if (!data?.length && !hasFilters) return <ContactEmpty />;
 
   return (
-    <div className="flex flex-row gap-8">
-      <ContactListFilter />
+    <div className="flex flex-col md:flex-row gap-4 md:gap-8">
+      {/* Mobile Filter Sheet */}
+      {isMobile && (
+        <Sheet open={filterOpen} onOpenChange={setFilterOpen}>
+          <SheetTrigger asChild>
+            <Button variant="outline" size="sm" className="w-fit">
+              <Filter className="h-4 w-4 mr-2" />
+              Filters
+              {hasFilters && (
+                <span className="ml-2 bg-primary text-primary-foreground rounded-full px-2 py-0.5 text-xs">
+                  {Object.keys(filterValues).length}
+                </span>
+              )}
+            </Button>
+          </SheetTrigger>
+          <SheetContent side="left" className="w-72 overflow-y-auto">
+            <SheetHeader>
+              <SheetTitle>Filters</SheetTitle>
+            </SheetHeader>
+            <div className="mt-4">
+              <ContactListFilter />
+            </div>
+          </SheetContent>
+        </Sheet>
+      )}
+
+      {/* Desktop Filter Sidebar */}
+      <div className="hidden md:block">
+        <ContactListFilter />
+      </div>
+
       <div className="w-full flex flex-col gap-4">
         <Card className="py-0">
           <ContactListContent />
